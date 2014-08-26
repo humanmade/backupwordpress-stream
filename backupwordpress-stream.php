@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Stream Connector - Comment Popularity
- * Depends: Stream, Comment Popularity
- * Plugin URI: https://wordpress.org/plugins/comment-popularity-stream
- * Description: TBD
+ * Plugin Name: Stream Connector - BackUpWordPress
+ * Depends: Stream, BackUpWordPress
+ * Plugin URI: https://bwp.hmn.md
+ * Description: View BackUpWordPress activity in your Stream dashboard
  * Version: 0.1.0
  * Author: Human Made Limited
  * Author URI: https://hmn.md/
  * License: GPLv2+
- * Text Domain: stream-connector-comment-popularity
+ * Text Domain: stream-connector-backupwordpress
  * Domain Path: /languages
  */
 
@@ -30,7 +30,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-class WP_Stream_Connector_Comment_Popularity_Wrapper {
+class WP_Stream_Connector_BackUpWordPress_Wrapper {
 
 	/**
 	 * Holds Stream plugin minimum version required
@@ -48,11 +48,11 @@ class WP_Stream_Connector_Comment_Popularity_Wrapper {
 	const VERSION = '0.1.0';
 
 	/**
-	 * Holds Comment Popularity plugin minimum version required
+	 * Holds BackUpWordPress plugin minimum version required
 	 *
 	 * @const string
 	 */
-	const COMMENT_POPULARITY_MIN_VERSION = '1.1.4';
+	const BACKUPWORDPRESS_MIN_VERSION = '3.0';
 
 	/**
 	 * Class constructor
@@ -62,12 +62,12 @@ class WP_Stream_Connector_Comment_Popularity_Wrapper {
 	}
 
 	/**
-	 * Register the Comment Popularity connector
+	 * Register the BackUpWordPress connector
 	 */
 	public function register_connector( $classes ) {
-		include dirname( __FILE__ ) . '/connectors/comment-popularity.php';
+		include dirname( __FILE__ ) . '/connectors/backupwordpress.php';
 
-		$classes[] = 'WP_Stream_Connector_Comment_Popularity';
+		$classes[] = 'WP_Stream_Connector_BackUpWordPress';
 
 		return $classes;
 	}
@@ -87,9 +87,9 @@ class WP_Stream_Connector_Comment_Popularity_Wrapper {
 		add_filter( 'wp_stream_connectors', array( $this, 'register_connector' ) );
 
 		// Register to Stream updates
-		if ( class_exists( 'WP_Stream_Updater' ) ) {
-			WP_Stream_Updater::instance()->register( plugin_basename( __FILE__ ) );
-		}
+//		if ( class_exists( 'WP_Stream_Updater' ) ) {
+//			WP_Stream_Updater::instance()->register( plugin_basename( __FILE__ ) );
+//		}
 	}
 
 	/**
@@ -102,24 +102,24 @@ class WP_Stream_Connector_Comment_Popularity_Wrapper {
 
 		if ( ! class_exists( 'WP_Stream' ) ) {
 			$notices[] = array(
-				'message'  => sprintf( __( '<strong>Stream Comment Popularity Connector</strong> requires the <a href="%1$s" target="_blank">Stream</a> plugin to be installed and activated.', 'stream-connector-comment-popularity' ), esc_url( 'http://wordpress.org/plugins/stream/' ) ),
+				'message'  => sprintf( __( '<strong>Stream BackUpWordPress Connector</strong> requires the <a href="%1$s" target="_blank">Stream</a> plugin to be installed and activated.', 'stream-connector-backupwordpress' ), esc_url( 'http://wordpress.org/plugins/stream/' ) ),
 				'is_error' => true,
 			);
 		} elseif ( version_compare( WP_Stream::VERSION, self::STREAM_MIN_VERSION, '<' ) ) {
 			$notices[] = array(
-				'message'  => sprintf( __( 'Please <a href="%1$s" target="_blank">install Stream</a> version %2$s or higher for the <strong>Stream Comment Popularity Connector</strong> plugin to work properly.', 'stream-connector-comment-popularity' ), esc_url( 'http://wordpress.org/plugins/stream/' ), self::STREAM_MIN_VERSION ),
+				'message'  => sprintf( __( 'Please <a href="%1$s" target="_blank">install Stream</a> version %2$s or higher for the <strong>Stream BackUpWordPress Connector</strong> plugin to work properly.', 'stream-connector-backupwordpress' ), esc_url( 'http://wordpress.org/plugins/stream/' ), self::STREAM_MIN_VERSION ),
 				'is_error' => true,
 			);
 		}
 
-		if ( ! class_exists( 'HMN_Comment_Popularity' ) ) {
+		if ( ! class_exists( 'HM_Backup' ) ) {
 			$notices[] = array(
-				'message'  => sprintf( __( '<strong>Stream Comment Popularity Connector</strong> requires the <a href="%1$s" target="_blank">Comment Popularity</a> plugin to be installed and activated.', 'stream-connector-comment-popularity' ), esc_url( 'http://wordpress.org/plugins/stream/' ) ),
+				'message'  => sprintf( __( '<strong>Stream BackupWordPress Connector</strong> requires the <a href="%1$s" target="_blank">BackupWordPress</a> plugin to be installed and activated.', 'stream-connector-backupwordpress' ), esc_url( 'http://wordpress.org/plugins/stream/' ) ),
 				'is_error' => true,
 			);
-		} elseif ( defined( 'HMN_Comment_Popularity::HMN_CP_PLUGIN_VERSION' ) && version_compare( HMN_Comment_Popularity::HMN_CP_PLUGIN_VERSION, self::COMMENT_POPULARITY_MIN_VERSION, '<' ) ) {
+		} elseif ( defined( 'HMBKP_VERSION' ) && version_compare( HMBKP_VERSION, self::BACKUPWORDPRESS_MIN_VERSION, '<' ) ) {
 			$notices[] = array(
-				'message'  => sprintf( __( 'Please <a href="%1$s" target="_blank">install Comment Popularity</a> version %2$s or higher for the <strong>Stream Comment Popularity Connector</strong> plugin to work properly.', 'stream-connector-comment-popularity' ), esc_url( 'http://wordpress.org/plugins/comment-popularity/' ), self::COMMENT_POPULARITY_MIN_VERSION ),
+				'message'  => sprintf( __( 'Please <a href="%1$s" target="_blank">install BackUpWordPress</a> version %2$s or higher for the <strong>Stream BackUpWordPress Connector</strong> plugin to work properly.', 'stream-connector-backupwordpress' ), esc_url( 'http://wordpress.org/plugins/backupwordpress/' ), self::BACKUPWORDPRESS_MIN_VERSION ),
 				'is_error' => true,
 			);
 		}
@@ -178,4 +178,4 @@ class WP_Stream_Connector_Comment_Popularity_Wrapper {
 
 }
 
-$GLOBALS['WP_Stream_Connector_Comment_Popularity'] = new WP_Stream_Connector_Comment_Popularity_Wrapper;
+$GLOBALS['WP_Stream_Connector_BackUpWordPress'] = new WP_Stream_Connector_BackUpWordPress_Wrapper;
